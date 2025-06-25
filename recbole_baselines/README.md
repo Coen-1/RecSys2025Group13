@@ -112,9 +112,9 @@ Repeat this process for both the MIND-small and MIND-large dataset. This is requ
 - We pretrain on eight categories in the small dataset (```autos, health, finance, foodanddrink, lifestyle, travel, video, weather```)
 - We fine-tune on selected category subsets from the large dataset (```tv``` and ```music```)
 
-We provide the preprocessed recbole finetune and training files for the Amazon and MIND dataset in the folowing drive: https://drive.google.com/drive/folders/1jj-ynTT8rhZD1yihf7csPTb6E8zRQI2X
+We provide the preprocessed recbole finetune and training data for the Amazon and MIND dataset in the folowing [drive](https://drive.google.com/drive/folders/1jj-ynTT8rhZD1yihf7csPTb6E8zRQI2X)
 
-The pretrained baslines on both datasets can be found here:
+The pretrained baselines on both datasets can be found here:
 |              Model              |
 |:-------------------------------|
 |[Amazon](https://drive.google.com/drive/u/1/folders/1wd0iPhlAgoxvOT3HGKPz1cX9Zpse4pEb)|
