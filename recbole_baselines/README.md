@@ -75,15 +75,46 @@ uv pip sync requirements.txt
 
 ## 📂 Download & Prepare Datasets
 
-I downloaded the datasets from the following link: https://github.com/AaronHeee/RecFormer?tab=readme-ov-file
+We used two main sources for our datasets:
 
-and used the scripts in `python_scripts' to convert them to the RecBole format.
+- **RecFormer GitHub repository**  
+  [https://github.com/AaronHeee/RecFormer](https://github.com/AaronHeee/RecFormer)  
+  This provided the Amazon data. We used the scripts in `python_scripts' to convert them to the RecBole format.
 
-For the MIND dataset we downloaded the data from the following link: https://msnews.github.io/
-For pretraining we downloaded the MIND-small training dataset. For finetuning we downloaded the MIND-large training set.
+- **Microsoft MIND Dataset**  
+  [https://msnews.github.io/](https://msnews.github.io/)  
+  We used:
+  - `MIND-small` for **pretraining**. specifically on eight slected category subsets (```autos, health, finance, foodanddrink, lifestyle, travel, video, weather```)
+  - `MIND-large` for **fine-tuning**, specifically on two selected category subsets (```tv``` and ```music```)
 
-To convert these MIND data files into the recbole format, use the ```convert_mind_to_recbole.py``` file 
+### 🛠 Conversion to RecBole Format
 
+To convert the raw MIND datasets into the RecBole-compatible format, we used the script:
+
+```bash
+python MIND/convert_mind_to_recbole.py \
+    --input_dir MIND/mind_data_large \
+    --output_dir MIND/mind_data_recbole_large \
+    --pretrain_categories autos health finance foodanddrink lifestyle travel video weather \
+    --finetune_categories tv music \
+    --split_by_main_keep_sub
+```
+
+Before running the script, ensure the following files exist:
+
+```bash
+MIND/mind_data_large/
+├── behaviors.tsv
+└── news.tsv
+MIND/mind_data_small/
+├── behaviors.tsv
+└── news.tsv
+```
+
+
+Repeat this process for both the MIND-small and MIND-large datasets. This is required because:
+- We pretrain on eight categories in the small dataset (```autos, health, finance, foodanddrink, lifestyle, travel, video, weather```)
+- We fine-tune on selected category subsets from the large dataset (```tv``` and ```music```)
 ---
 
 ## 🚀 Training
