@@ -82,7 +82,7 @@ and used the scripts in `python_scripts' to convert them to the RecBole format.
 For the MIND dataset we downloaded the data from the following link: https://msnews.github.io/
 For pretraining we downloaded the MIND-small training dataset. For finetuning we downloaded the MIND-large training set.
 
-To convert these MIND data files into the recbole format, use the '''bash convert_mind_to_recbole.py'''
+To convert these MIND data files into the recbole format, use the ```convert_mind_to_recbole.py``` file 
 
 ---
 
