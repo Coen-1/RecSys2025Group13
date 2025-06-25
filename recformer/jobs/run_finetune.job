@@ -1,0 +1,47 @@
+#!/bin/bash
+#SBATCH --job-name=run_recformer_finetune
+#SBATCH --output=job_output/run_recformer_finetune_%A.out
+#SBATCH --ntasks=1
+#SBATCH --time=24:00:00
+#SBATCH --partition=gpu_a100
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
+#SBATCH --gpus=1
+
+# Go to the directory where the job was submitted from
+cd $SLURM_SUBMIT_DIR
+
+# Create output dir
+mkdir -p jobs/job_output
+
+# Activate venv
+source recformer_env/bin/activate
+
+# 1) Ensure Longformer ckpt exists (only first run)
+if [ ! -f longformer_ckpt/longformer-base-4096.bin ]; then
+  echo "Saving Longformer CKPT"
+  python save_longformer_ckpt.py
+fi
+
+# 2) Copy lightning checkpoint to expected location and convert
+PRETRAIN_CKPT_DIR=pretrain_ckpt
+LIGHTNING_CKPT_PATH="checkpoints/epoch=0-accuracy=0.2459.ckpt"  
+mkdir -p ${PRETRAIN_CKPT_DIR}
+cp ${LIGHTNING_CKPT_PATH} ${PRETRAIN_CKPT_DIR}/pytorch_model.bin
+
+# Convert lightning ckpt
+python convert_pretrain_ckpt.py
+
+#
+DATASET="Scientific" 
+
+python finetune.py \
+    --pretrain_ckpt pretrain_ckpt/seqrec_pretrain_ckpt.bin \
+    --data_path finetune_data/${DATASET} \
+    --output_dir checkpoints/finetune_${DATASET} \
+    --num_train_epochs 128 \
+    --batch_size 16 \
+    --learning_rate 5e-5 \
+    --device 0 \
+    --fp16 \
+    --finetune_negative_sample_size -1

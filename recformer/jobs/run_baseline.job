@@ -1,0 +1,26 @@
+#! /bin/bash
+#SBATCH --job-name=run_recformer_baseline
+#SBATCH --output=job_output/run_recformer_baseline_%A.out
+#SBATCH --ntasks=1
+#SBATCH --time=20:00:00
+#SBATCH --partition=gpu_a100
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
+#SBATCH --gpus=1
+
+# Go to the directory where the job was submitted from
+cd $SLURM_SUBMIT_DIR
+
+
+
+# activate venv
+mkdir -p jobs/job_output
+source recformer_env/bin/activate
+
+echo "Saving Longformer CKPT"
+python save_longformer_ckpt.py
+
+# Run the main script
+echo "Running RecFormer Baseline"
+bash lightning_run.sh
+
