@@ -178,7 +178,7 @@ MIND_Recformer/mind_data_small/
 We provide the preprocessed recformer finetune and training data for the MIND dataset in the folowing [drive](https://drive.google.com/drive/u/1/folders/1tbg3XeGJ6p-RDOhm2MOeJYEQhon4dRAl)
 
 ### Pretraining
-For training the Recformer on the MIND dataset, the same steps can be followed as explained above in ```Training```. However instead of ```lightning_run.sh``` please run:
+For training the Recformer on the MIND dataset, the same steps can be followed as explained above in [Training](#training). However instead of ```lightning_run.sh``` please run:
 
 ```bash
 sbatch lightning_run_MIND.sh

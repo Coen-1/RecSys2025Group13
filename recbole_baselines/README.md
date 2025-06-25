@@ -152,7 +152,7 @@ Please note that for finetuning you should set the correct pretrained model path
 ---
 
 ### Cross domain experiment
-To reproduce our cross domain experiment, simply run the ```cross_inference.job``` file. To change for SASRec/ FDSA, again simply change the ```config_file``` in the job files accordingly.
+To reproduce our cross domain experiment, simply run the ```cross_inference.job``` file. To change for SASRec/ FDSA or tv/music, again simply change the ```config_file``` in the job files accordingly.
 
 
 ## 📦 Dependencies / References
