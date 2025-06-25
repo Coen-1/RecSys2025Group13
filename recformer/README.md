@@ -135,9 +135,9 @@ Our code will train and evaluate the model for the sequential recommendation tas
 
 <strong>Note</strong>: from our empirical results, you can set a smaller maximum length (512 or 256, our model is default to 1024) of Recformer `e.g., config.max_token_num = 512` to obtain more efficient finetuning and inference without obvious performance decay (128 has an obvious decay).
 
-### MIND
+## MIND
 
-## Dataset and processing
+### Dataset and processing
 For the Microsoft news datset experiments we use the following source:
 - **Microsoft MIND Dataset**  
   [https://msnews.github.io/](https://msnews.github.io/)  
@@ -174,8 +174,16 @@ MIND_Recformer/mind_data_small/
 ```
 
 
-We provide the preprocessed recbole finetune and training data for the Amazon and MIND dataset in the folowing [drive](https://drive.google.com/drive/folders/1jj-ynTT8rhZD1yihf7csPTb6E8zRQI2X)
+We provide the preprocessed recformer finetune and training data for the MIND dataset in the folowing [drive](https://drive.google.com/drive/u/1/folders/1tbg3XeGJ6p-RDOhm2MOeJYEQhon4dRAl)
 
+### Pretraining
+For training the Recformer on the MIND dataset, the same steps can be followed as explained above in ```Training```. However instead of ```lightning_run.sh``` please run:
+
+```bash
+sbatch lightning_run_MIND.sh
+```
+
+The checkpoint can be converted using the same steps explained earlier. We also provide the pretrained checkpoint for the RecformerForSeqRec used in the KDD paper (allenai/longformer-base-4096 as backbone):
 
 ## Contact
 
