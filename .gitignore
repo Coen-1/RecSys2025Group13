@@ -1,0 +1,45 @@
+# Python virtual environments
+venv/
+.venv/
+env/
+.env/
+virtualenv/
+
+# Checkpoint files
+*.ckpt
+checkpoints/
+.checkpoints/
+*.pt
+*.pth
+*.h5
+*.hdf5
+*.weights
+
+# Binary files
+*.bin
+*.exe
+*.dll
+*.so
+*.dylib
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build and distribution
+dist/
+build/
+*.egg-info/
+
+
+*.config
+*.state_dict
+*.tokenizer
+*.json

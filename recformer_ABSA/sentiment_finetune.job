@@ -1,0 +1,46 @@
+#!/bin/bash
+# ----------------- JOB CONFIGURATION -----------------
+#SBATCH --job-name=sentiment_analysis
+#SBATCH --output=job_output/sentiment_analysis_%j.out # Log file for stdout/stderr, %j is the job ID
+#SBATCH --nodes=1                                     # Run on a single node
+#SBATCH --ntasks=1                                    # Run a single task
+#SBATCH --cpus-per-task=8                             # Request 8 CPU cores
+#SBATCH --time=10:00:00                               # Set a 2-hour time limit (adjust as needed)
+#SBATCH --partition=gpu_a100                          # Request an A100 GPU
+#SBATCH --gpus=1                                      # Request exactly one GPU
+
+# ----------------- JOB EXECUTION -----------------
+
+# Print job information
+echo "Job ID: $SLURM_JOB_ID"
+echo "Running on node: $SLURM_NODELIST"
+echo "Using $SLURM_CPUS_PER_TASK CPUs and $SLURM_GPUS_ON_NODE GPU(s)"
+echo "---------------------------------"
+
+# --- 1. Set Project Directory ---
+# IMPORTANT: Change this to the absolute path of your project directory.
+cd "/home/scur0996/sentiment addition_to_product-rep/recformer_ABSA"
+
+
+
+# --- 2. Create Log Directory ---
+mkdir -p job_output
+
+# --- 3. Activate Virtual Environment ---
+# IMPORTANT: Make sure you have created a virtual environment and installed requirements.
+# e.g., python -m venv venv && source venv/bin/activate && pip install -r requirements.txt
+source venv/bin/activate
+
+# --- 5. Run the Script ---
+# Suppress the harmless "tokenizers" warning
+export TOKENIZERS_PARALLELISM=false
+
+echo "Starting sentiment analysis..."
+
+python main.py \
+    --input finetune_data_augmentation/data/Scientific/meta_data.json\
+    --output finetune_data_augmentation/sentiments.json
+
+echo "---------------------------------"
+echo "Job finished successfully."
+

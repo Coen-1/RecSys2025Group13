@@ -1,0 +1,9 @@
+pyabsa
+ijson
+torch
+tqdm
+pandas
+transformers
+setfit[absa]
+spacy>=3.0
+backports.lzma 
