@@ -2,7 +2,7 @@
 #SBATCH --job-name=run_recformer_finetune
 #SBATCH --output=job_output/run_recformer_finetune_%A.out
 #SBATCH --ntasks=1
-#SBATCH --time=01:00:00  # Increased time - finetuning might take longer than 5 minutes
+#SBATCH --time=00:10:00  # Increased time - finetuning might take longer than 5 minutes
 #SBATCH --partition=gpu_a100
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=64
@@ -10,7 +10,7 @@
 
 NPROC=4
 
-cd /home/scur0996/recformer_reproduction_repo
+cd /home/YOUR_USERNAME/RECSYSGROUP13/recbole_baselines # Change username and path as needed
 
 # Create job_output directory if it doesn't exist
 mkdir -p jobs/job_output

@@ -10,7 +10,8 @@
 
 NPROC=4
 
-cd /home/YOUR_USERNAME/recformer_reproduction_repo
+cd /home/YOUR_USERNAME/RECSYSGROUP13/recbole_baselines # Change username and path as needed
+
 
 # Activate your virtualenv
 source recformer_env/bin/activate

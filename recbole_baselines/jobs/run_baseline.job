@@ -10,7 +10,7 @@
 #SBATCH --gpus=4
 NPROC=4
 
-cd /home/scur0996/recformer_reproduction_repo
+cd /home/YOUR_USERNAME/RECSYSGROUP13/recbole_baselines # Change username and path as needed
 # activate venv
 mkdir -p jobs/job_output
 
@@ -18,8 +18,5 @@ source recformer_env/bin/activate
 
 # Run the main script with the config file
 echo "Using RecBole's main script for DDP"
-python python_scripts/run.py \
-    --config_file=configs/recbole_baseline_config.yaml \
-    --nproc=$NPROC # don't forget to set gpus_id in the config file
-    --mode=pretrain
+python python_scripts/run.py --config_file=configs/recbole_baseline_config.yaml --nproc=$NPROC --mode=pretrain
 

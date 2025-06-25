@@ -9,7 +9,8 @@
 
 #SBATCH --gpus=1
 
-cd /home/scur2732/repro/RecFormer
+cd /home/YOUR_USERNAME/RECSYSGROUP13/recbole_baselines # Change username and path as needed
+
 # activate venv
 mkdir -p jobs/job_output
 
