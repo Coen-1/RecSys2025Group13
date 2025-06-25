@@ -183,7 +183,7 @@ For training the Recformer on the MIND dataset, the same steps can be followed a
 sbatch lightning_run_MIND.sh
 ```
 
-The checkpoint can be converted using the same steps explained earlier. We also provide the pretrained checkpoint for the RecformerForSeqRec used in the KDD paper (allenai/longformer-base-4096 as backbone):
+The checkpoint can be converted using the same steps explained earlier. We also provide the pretrained checkpoint for the RecformerForSeqRec: https://drive.google.com/drive/u/1/folders/1pA0nNtySGg81_EPsDruc8tDLvoyP2vFU
 
 ### Finetuning
 For finetuning, simply run:
@@ -198,7 +198,7 @@ To run the cross domain experiment, run from the  ```cross_domain``` folder:
 ```bash
 sbatch cross_domain.job
 ```
-And again, make sure to set the ```data_path``` to ```tv``` or ```music``` accordingly
+And again, make sure to set the ```data_path``` to ```tv``` or ```music``` accordingly.  Also make sure to set the pretrained model path to the Recformer model pretrained on the Amazon dataset.
 ## Contact
 
 If you have any questions related to the code or the paper, feel free to create an issue or email Jiacheng Li (`j9li@ucsd.edu`), the corresponding author of the KDD paper. Thanks!
