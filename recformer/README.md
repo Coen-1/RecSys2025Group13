@@ -185,6 +185,20 @@ sbatch lightning_run_MIND.sh
 
 The checkpoint can be converted using the same steps explained earlier. We also provide the pretrained checkpoint for the RecformerForSeqRec used in the KDD paper (allenai/longformer-base-4096 as backbone):
 
+### Finetuning
+For finetuning, simply run:
+```bash
+sbatch finetune_MIND.job
+```
+Just make sure to set the ```data_path``` to ```tv``` or ```music``` accordingly
+
+
+### Cross domain
+To run the cross domain experiment, run from the  ```cross_domain``` folder:
+```bash
+sbatch cross_domain.job
+```
+And again, make sure to set the ```data_path``` to ```tv``` or ```music``` accordingly
 ## Contact
 
 If you have any questions related to the code or the paper, feel free to create an issue or email Jiacheng Li (`j9li@ucsd.edu`), the corresponding author of the KDD paper. Thanks!

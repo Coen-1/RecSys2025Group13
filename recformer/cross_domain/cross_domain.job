@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --job-name=run_recformer_cross_domain
+#SBATCH --output=job_output/run_recformer_cross_domain_%A.out
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00
+#SBATCH --partition=gpu_a100
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
+#SBATCH --gpus=1
+
+
+# Activate venv
+source venv/bin/activate
+python cross_domain/cross_domain.py \
+--pretrain_ckpt cross_domain/pretrain_ckpt/seqrec_pretrain_ckpt.bin \
+--data_path MIND_Recformer/mind_data_recformer_finetune_large/finetune_tv \
+--batch_size 16 \
+--device 0 \
+--metric_ks 10 50
