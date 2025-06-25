@@ -1,0 +1,40 @@
+model: SASRec  
+dataset: finetune_music
+data_path: ./MIND/mind_data_recbole_large
+
+USER_ID_FIELD: user_id
+ITEM_ID_FIELD: item_id
+TIME_FIELD: timestamp
+
+load_col:
+  inter: [user_id, item_id, timestamp]
+  item: [item_id, title, categories]  # only if categories or title used
+
+# ===================== Filtering ===================== #
+min_user_inter_num: 1
+min_item_inter_num: 1
+filter_inter_by_user_or_item: False
+
+# Dataset splitting for evaluation
+eval_args:
+  split: {'RS': [0.1, 0.1, 0.8]}  
+  group_by: user
+  order: TO
+  mode: full
+
+metrics: [Recall, NDCG, MRR]
+topk: [10]
+
+# No training
+epochs: 0
+loss_type: CE
+train_neg_sample_args: ~
+
+# Path to pretrained model
+pretrained_model_path: ./saved_baselines/SASRec-May-21-2025_01-41-00.pth/SASRec-Jun-06-2025_10-12-44.pth
+
+show_progress: True
+seed: 2025
+reproducibility: True
+gpu_id: 0
+use_gpu: True

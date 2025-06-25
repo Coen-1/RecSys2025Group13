@@ -1,0 +1,19 @@
+#! /bin/bash
+#SBATCH --job-name=run_recformer_cross_inference_mind
+#SBATCH --output=job_output/run_recformer_cross_inference_%A.out
+#SBATCH --ntasks=1
+#SBATCH --time=00:15:00
+#SBATCH --partition=gpu_a100 #recbole doesn't support gpu_h100 it seems
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
+
+#SBATCH --gpus=1
+
+cd /home/scur2732/repro/RecFormer
+# activate venv
+mkdir -p jobs/job_output
+
+source recformer_env/bin/activate
+
+# Run the main script with the config file
+python python_scripts/run.py --config_file MIND/cross_inference_FDSA.yaml --load_model

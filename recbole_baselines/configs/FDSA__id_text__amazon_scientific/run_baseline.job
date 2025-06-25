@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH --job-name=run_fdsa_baseline
+#SBATCH --output=jobs/job_output/fdsa_baseline_%A.out
+#SBATCH --ntasks=1
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
+#SBATCH --time=01:00:00
+#SBATCH --partition=gpu_a100
+#SBATCH --gpus=4
+
+NPROC=4
+
+cd /home/YOUR_USERNAME/recformer_reproduction_repo
+
+# Activate your virtualenv
+source recformer_env/bin/activate
+mkdir -p jobs/job_output
+
+# Run FDSA baseline with RecBole
+python -m recbole.quick_start.run_recbole \
+  --config_file=configs/fdsa_scientific_baseline.yaml
