@@ -1,18 +1,14 @@
 # 🔁 Reproducibility Instructions
 
-This document provides the full set of instructions to reproduce our project results from scratch, including data setup, environment configuration, training, and evaluation. This repo provides the code to get the results of the recbole models (FDSA and SASRec) for all experiments performed in our study.
+This document provides the instructions to get the results of the recbole models (FDSA and SASRec) for all experiments performed in our study.
 
 ---
 
 ## 🧱 Project Structure
 
 ```bash
-recformer_reproduction_repo/
-├── .gitignore
-├── LICENSE
-├── README.md
-├── REPRO.md                
-├── pyproject.toml          # Python project configuration
+recbole_baselines/
+├── README.md            
 ├── requirements.txt
 │
 ├── configs/                # Experiment configuration files
@@ -79,7 +75,7 @@ We used two main sources for our datasets:
 
 - **RecFormer GitHub repository**  
   [https://github.com/AaronHeee/RecFormer](https://github.com/AaronHeee/RecFormer)  
-  This provides the Amazon data. We used the scripts in `python_scripts' to convert them to the RecBole format.
+  We downloaded the [Amazon dataset](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/) from this repository.  We used the scripts in `python_scripts' to convert them to the RecBole format.
 
 - **Microsoft MIND Dataset**  
   [https://msnews.github.io/](https://msnews.github.io/)  
@@ -112,11 +108,18 @@ MIND/mind_data_small/
 ```
 
 
-Repeat this process for both the MIND-small and MIND-large datasets. This is required because:
+Repeat this process for both the MIND-small and MIND-large dataset. This is required because:
 - We pretrain on eight categories in the small dataset (```autos, health, finance, foodanddrink, lifestyle, travel, video, weather```)
 - We fine-tune on selected category subsets from the large dataset (```tv``` and ```music```)
 
 We provide the preprocessed recbole finetune and training files for the Amazon and MIND dataset in the folowing drive: https://drive.google.com/drive/folders/1jj-ynTT8rhZD1yihf7csPTb6E8zRQI2X
+
+The pretrained baslines on both datasets can be found here:
+|              Model              |
+|:-------------------------------|
+|[Amazon](https://drive.google.com/drive/u/1/folders/1wd0iPhlAgoxvOT3HGKPz1cX9Zpse4pEb)|
+|[MIND](https://drive.google.com/drive/u/1/folders/1n_R6prbriDRkD9xLL_W4cVozzciMqCEt)|
+
 ---
 
 ## 🚀 Training
@@ -133,7 +136,7 @@ sbatch run_finetune.job
 For FDSA run the same jobs from the folder ```configs/FDSA_id_text_configs/```
 
 
-The parameters we used are the ones you see in my job scripts and config files.
+The parameters we used are the ones you see in the job scripts and config files.
 
 ### Baselines MIND
 Run the following slurm files from the ```jobs``` folder:
