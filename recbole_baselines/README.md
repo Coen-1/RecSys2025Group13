@@ -79,7 +79,7 @@ We used two main sources for our datasets:
 
 - **RecFormer GitHub repository**  
   [https://github.com/AaronHeee/RecFormer](https://github.com/AaronHeee/RecFormer)  
-  This provided the Amazon data. We used the scripts in `python_scripts' to convert them to the RecBole format.
+  This provides the Amazon data. We used the scripts in `python_scripts' to convert them to the RecBole format.
 
 - **Microsoft MIND Dataset**  
   [https://msnews.github.io/](https://msnews.github.io/)  
@@ -115,28 +115,41 @@ MIND/mind_data_small/
 Repeat this process for both the MIND-small and MIND-large datasets. This is required because:
 - We pretrain on eight categories in the small dataset (```autos, health, finance, foodanddrink, lifestyle, travel, video, weather```)
 - We fine-tune on selected category subsets from the large dataset (```tv``` and ```music```)
+
+We provide the preprocessed recbole finetune and training files for the Amazon and MIND dataset in the folowing drive: https://drive.google.com/drive/folders/1jj-ynTT8rhZD1yihf7csPTb6E8zRQI2X
 ---
 
 ## 🚀 Training
 
-### Baselines
+### Baselines Amazon
 
-Execute the following slurm jobs:
+For SASRec run the following slurm jobs:
 
 ```bash
 sbatch run_baseline.job 
 sbatch run_finetune.job
 ```
-Please note the numbers of gpus need to be changed in the job script and the config file. The parameters I used are the ones you see in my job scripts and config files.
+
+For FDSA run the same jobs from the folder ```configs/FDSA_id_text_configs/```
+
+
+The parameters we used are the ones you see in my job scripts and config files.
+
+### Baselines MIND
+Run the following slurm files from the ```jobs``` folder:
+```bash
+sbatch mind_baseline.job 
+sbatch mind_finetune.job
+```
+To change for SASRec/ FDSA, simply change the ```config_file``` in the job files accordingly.
+
+Please note that for finetuning you should set the correct pretrained model path and dataset according to which category you want to finetune the model on.
+
+
 ---
 
-## 📈 Evaluation
-
-Evaluation happens after training regardless, but you can run a 'evaluate' run by setting the epochs to 0 in the config file.
-
-Note, I completely vibecoded the gini metric in `run.py`; it works, but I don't stand for the code :p
-
----
+### Cross domain experiment
+To reproduce our cross domain experiment, simply run the ```cross_inference.job``` file
 
 
 ## 📦 Dependencies / References
