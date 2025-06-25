@@ -1,6 +1,6 @@
 # 🔁 Reproducibility Instructions
 
-This document provides the full set of instructions to reproduce our project results from scratch, including data setup, environment configuration, training, and evaluation.
+This document provides the full set of instructions to reproduce our project results from scratch, including data setup, environment configuration, training, and evaluation. This repo provides the code to get the results of the recbole models (FDSA and SASRec) for all experiments performed in our study.
 
 ---
 
@@ -79,13 +79,10 @@ I downloaded the datasets from the following link: https://github.com/AaronHeee/
 
 and used the scripts in `python_scripts' to convert them to the RecBole format.
 
-NOTE, For my tests, I've just ran on the train_set and split that one up into train, valid, test. If you want to run properly, you'll need to figure out how to properly use new datasets in RecBole.
+For the MIND dataset we downloaded the data from the following link: https://msnews.github.io/
+For pretraining we downloaded the MIND-small training dataset. For finetuning we downloaded the MIND-large training set.
 
----
-
-## ⚙️ Configuration
-
-Set your parameters in the config file before training. They're set for training and finetuning
+To convert these MIND data files into the recbole format, use the '''bash convert_mind_to_recbole.py'''
 
 ---
 
