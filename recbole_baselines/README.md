@@ -83,9 +83,9 @@ We used two main sources for our datasets:
 
 - **Microsoft MIND Dataset**  
   [https://msnews.github.io/](https://msnews.github.io/)  
-  We used:
-  - `MIND-small` for **pretraining**. specifically on eight slected category subsets (```autos, health, finance, foodanddrink, lifestyle, travel, video, weather```)
-  - `MIND-large` for **fine-tuning**, specifically on two selected category subsets (```tv``` and ```music```)
+  We downloaded:
+  - `MIND-small` training set for **pretraining**. specifically on eight slected category subsets (```autos, health, finance, foodanddrink, lifestyle, travel, video, weather```)
+  - `MIND-large` training set for **fine-tuning**, specifically on two selected category subsets (```tv``` and ```music```)
 
 ### 🛠 Conversion to RecBole Format
 
@@ -100,7 +100,7 @@ python MIND/convert_mind_to_recbole.py \
     --split_by_main_keep_sub
 ```
 
-Before running the script, ensure the following files exist:
+Before running the script, ensure the following files exist (retrieved from downloading the MIND training datasets):
 
 ```bash
 MIND/mind_data_large/
@@ -149,7 +149,7 @@ Please note that for finetuning you should set the correct pretrained model path
 ---
 
 ### Cross domain experiment
-To reproduce our cross domain experiment, simply run the ```cross_inference.job``` file
+To reproduce our cross domain experiment, simply run the ```cross_inference.job``` file. To change for SASRec/ FDSA, again simply change the ```config_file``` in the job files accordingly.
 
 
 ## 📦 Dependencies / References
