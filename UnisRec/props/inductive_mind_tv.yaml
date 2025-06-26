@@ -1,0 +1,26 @@
+# props/inductive_mind_tv.yaml
+
+# Inherit most settings from the default finetune.yaml
+# We will override/add only what's necessary for MIND-TV inductive test
+
+# --- Key settings for inductive evaluation ---
+train_stage: inductive_ft 
+epochs: 1 # Run for only 1 epoch to essentially just adapt and evaluate
+eval_step: 1 # Evaluate after every epoch
+
+# --- Dataset specific ---
+# data_path will be 'dataset/downstream/' (this is a default in RecBole for dataset name)
+# The dataset name will be passed via -d argument
+
+# --- Evaluation settings (ensure they are what you want) ---
+metrics: [Recall, MRR, HIT, NDCG]
+topk: [10, 50] # Or just [10] if you only care about top 10
+valid_metric: NDCG@10 # Still need a valid metric for the trainer logic
+eval_batch_size: 1024 # Adjust if needed
+
+# You might need to copy other essential params from finetune.yaml 
+# if they are not automatically inherited or set by RecBole defaults,
+# like stopping_step, learning_rate for the adaptor, etc.
+# For a 1-epoch run, many of these won't matter much.
+stopping_step: 1 
+learning_rate: 0.001 # For the adaptor layers

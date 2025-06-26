@@ -43,3 +43,11 @@ build/
 *.state_dict
 *.tokenizer
 *.json
+
+
+# Log files
+*.log
+log/
+job_output/
+
+    

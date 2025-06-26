@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#SBATCH --job-name=FineTune_NewMusic
+#SBATCH --partition=gpu_a100  # Or your preferred GPU partition
+#SBATCH --time=04:00:00      # Adjust as needed
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --gpus-per-node=1
+#SBATCH --cpus-per-task=4    
+#SBATCH --mem=32G           
+#SBATCH --output=job_output/finetune_new_music_%A.out
+#SBATCH --error=job_output/finetune_new_music_%A.err
+
+# --- Setup ---
+echo "Setting up environment for NewMusicFineTune fine-tuning..."
+PROJECT_DIR="/gpfs/home2/scur2749/unisrec_project/UniSRec" 
+cd $PROJECT_DIR
+
+module purge
+module load 2023 Python/3.11.3-GCCcore-12.3.0 PyTorch/2.1.2-foss-2023a-CUDA-12.1.1
+source venv_unisrec/bin/activate
+
+# --- Run Fine-tuning ---
+echo "Starting UniSRec fine-tuning on NewMusicFineTune dataset..."
+# Use YOUR MIND pre-trained model path for the -p argument
+# Use NewMusicFineTune as the dataset name for the -d argument
+python finetune.py \
+    -d NewMusicFineTune \
+    -p /gpfs/home2/scur2749/unisrec_project/UniSRec/saved/UniSRec-MyCustomPretrain-300.pth \
+    train_stage transductive_ft # Or inductive_ft if you prefer
+    # You can add other overrides like epochs here if needed, e.g., epochs 50
+
+echo "Fine-tuning on NewMusicFineTune finished."

@@ -1,0 +1,59 @@
+#!/bin/bash
+
+#SBATCH --job-name=FullPreprocess_NewMusic
+#SBATCH --partition=gpu_a100  # GPU needed for embedding step in process_generic_json_sessions.py
+#SBATCH --time=01:30:00      # Adjust if your dataset or embedding model is larger
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --gpus-per-node=1
+#SBATCH --cpus-per-task=4    # Can be adjusted
+#SBATCH --mem=32G           # Adjust if pandas operations on large files need more
+#SBATCH --output=job_output/full_preprocess_new_music_%A.out
+#SBATCH --error=job_output/full_preprocess_new_music_%A.err
+
+# --- Configuration & Paths ---
+PROJECT_DIR="/gpfs/home2/scur2749/unisrec_project/UniSRec"
+RAW_DATA_SUBDIR="NewMusicData" # The folder name inside dataset/raw/
+OUTPUT_DATASET_NAME="NewMusicFineTune" # The base name for the final UniSRec dataset
+
+# --- Derived Paths ---
+RAW_DATA_INPUT_DIR="${PROJECT_DIR}/dataset/raw/${RAW_DATA_SUBDIR}"
+PREPROCESSING_SCRIPT_DIR="${PROJECT_DIR}/dataset/preprocessing"
+FINAL_OUTPUT_DIR="${PROJECT_DIR}/dataset/downstream/${OUTPUT_DATASET_NAME}" # For fine-tuning data
+
+# --- Setup ---
+echo "Setting up environment for full NewMusicData preprocessing..."
+cd $PROJECT_DIR
+
+module purge
+module load 2023 Python/3.11.3-GCCcore-12.3.0 PyTorch/2.1.2-foss-2023a-CUDA-12.1.1
+source venv_unisrec/bin/activate
+
+# Ensure necessary packages are installed
+echo "Installing/checking pandas, transformers, tqdm..."
+pip install pandas transformers tqdm
+
+# --- Step 1: Create Item ID Translation Map ---
+echo "Step 1: Creating item ID translation map..."
+python "${PREPROCESSING_SCRIPT_DIR}/create_item_translation_map.py" \
+    --meta_data_filepath "${RAW_DATA_INPUT_DIR}/meta_data.json" \
+    --session_files_dir "${RAW_DATA_INPUT_DIR}/" \
+    --output_map_filepath "${RAW_DATA_INPUT_DIR}/item_id_internal_to_original.json"
+
+# Check if map creation was successful (simple check, more robust checks can be added)
+if [ ! -f "${RAW_DATA_INPUT_DIR}/item_id_internal_to_original.json" ]; then
+    echo "ERROR: Item ID translation map was not created. Exiting."
+    exit 1
+fi
+echo "Item ID translation map created successfully."
+
+# --- Step 2: Convert JSON to UniSRec Format using the Translation Map ---
+echo "Step 2: Converting JSON data to UniSRec format..."
+python "${PREPROCESSING_SCRIPT_DIR}/process_generic_json_sessions.py" \
+    --input_json_dir "${RAW_DATA_INPUT_DIR}/" \
+    --item_translation_map_filename "item_id_internal_to_original.json" \
+    --output_unisrec_dir "${FINAL_OUTPUT_DIR}/" \
+    --dataset_name "${OUTPUT_DATASET_NAME}"
+    # No --apply_prefix because this is for a fine-tuning dataset
+
+echo "Full preprocessing for ${OUTPUT_DATASET_NAME} finished."
