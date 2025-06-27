@@ -15,3 +15,4 @@ Below is an overview of all the subfolders and their code
 this folder contains all the code to reproduce our findings related to our aspect based sentiment extraction extension to the paper.
 
 
+Link to the datasets and checkpoints: https://drive.google.com/drive/folders/1jj-ynTT8rhZD1yihf7csPTb6E8zRQI2X?usp=share_link
