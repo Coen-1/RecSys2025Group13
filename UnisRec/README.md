@@ -168,6 +168,8 @@ sbatch run_finetune_new_music.job
 
 After any fine-tuning run, a `.pth` model file is saved. Use it with `evaluate_advanced_metrics.py` to get diversity and coverage metrics.
 
+Similar process for the TV finetuning
+
 ### 5.1. The Evaluation Script
 
 The `evaluate_advanced_metrics.py` script calculates:
